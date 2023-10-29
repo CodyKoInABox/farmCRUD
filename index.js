@@ -95,6 +95,19 @@ app.get('/deletar/:codigo', (req, res) => {
 // endpoint para pesquisar uma cultura pelo seu codigo
 app.get('/codigo/:codigo', (req, res) => {
 
+    let query = `SELECT * FROM cultura WHERE codigo_cultura = ${req.params.codigo};`
+
+    connection.query(query, (err, results, fields) => {
+        console.log(err)
+        console.log(results)
+        console.log(fields)
+
+        if(err == null){
+            res.json(results)
+        }else{
+            res.send('ERROR')
+        }
+    })
 })
 
 

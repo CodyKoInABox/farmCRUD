@@ -25,6 +25,7 @@ app.get('/criar/:nome/:ano', (req, res) => {
 
     let query = `INSERT INTO cultura(nome_cultura, ano_safra) VALUES("${req.params.nome}", ${req.params.ano});`
     let result
+
     connection.query(query, (err, results, fields) => {
         result = results;
         console.log(err)
@@ -42,6 +43,21 @@ app.get('/criar/:nome/:ano', (req, res) => {
 // endpoint que lista todas as culturas (READ)
 app.get('/lista', (req, res) => {
 
+    let query = `SELECT * FROM cultura`
+    let result
+
+    connection.query(query, (err, results, fields) => {
+        result = results;
+        console.log(err)
+        console.log(results)
+        console.log(fields)
+
+        if(err == null){
+            res.json(results)
+        }else{
+            res.send('ERROR')
+        }
+    })
 })
 
 // endpoint que atualiza o nome e ano de uma cultura baseado no seu codigo (UPDATE)

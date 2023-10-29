@@ -24,10 +24,8 @@ app.get('/ping', (req, res) => {
 app.get('/criar/:nome/:ano', (req, res) => {
 
     let query = `INSERT INTO cultura(nome_cultura, ano_safra) VALUES("${req.params.nome}", ${req.params.ano});`
-    let result
 
     connection.query(query, (err, results, fields) => {
-        result = results;
         console.log(err)
         console.log(results)
         console.log(fields)
@@ -43,11 +41,9 @@ app.get('/criar/:nome/:ano', (req, res) => {
 // endpoint que lista todas as culturas (READ)
 app.get('/lista', (req, res) => {
 
-    let query = `SELECT * FROM cultura`
-    let result
+    let query = `SELECT * FROM cultura;`
 
     connection.query(query, (err, results, fields) => {
-        result = results;
         console.log(err)
         console.log(results)
         console.log(fields)
@@ -63,11 +59,9 @@ app.get('/lista', (req, res) => {
 // endpoint que atualiza o nome e ano de uma cultura baseado no seu codigo (UPDATE)
 app.get('/atualizar/:codigo/:nome/:ano', (req, res) => {
 
-    let query = `UPDATE cultura SET nome_cultura = "${req.params.nome}", ano_safra = "${req.params.ano}" WHERE codigo_cultura = ${req.params.codigo}`
-    let result
+    let query = `UPDATE cultura SET nome_cultura = "${req.params.nome}", ano_safra = "${req.params.ano}" WHERE codigo_cultura = ${req.params.codigo};`
 
     connection.query(query, (err, results, fields) => {
-        result = results;
         console.log(err)
         console.log(results)
         console.log(fields)
@@ -83,6 +77,19 @@ app.get('/atualizar/:codigo/:nome/:ano', (req, res) => {
 // endpoint que deleta uma cultura baseado no seu codigo
 app.get('/deletar/:codigo', (req, res) => {
 
+    let query = `DELETE FROM cultura WHERE codigo_cultura = ${req.params.codigo};`
+
+    connection.query(query, (err, results, fields) => {
+        console.log(err)
+        console.log(results)
+        console.log(fields)
+
+        if(err == null){
+            res.json(results)
+        }else{
+            res.send('ERROR')
+        }
+    })
 })
 
 // endpoint para pesquisar uma cultura pelo seu codigo

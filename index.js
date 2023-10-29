@@ -33,7 +33,7 @@ app.get('/criar/:nome/:ano', (req, res) => {
         console.log(fields)
 
         if(err == null){
-            res.send('OK')
+            res.json(results)
         }else{
             res.send('ERROR')
         }
@@ -63,6 +63,21 @@ app.get('/lista', (req, res) => {
 // endpoint que atualiza o nome e ano de uma cultura baseado no seu codigo (UPDATE)
 app.get('/atualizar/:codigo/:nome/:ano', (req, res) => {
 
+    let query = `UPDATE cultura SET nome_cultura = "${req.params.nome}", ano_safra = "${req.params.ano}" WHERE codigo_cultura = ${req.params.codigo}`
+    let result
+
+    connection.query(query, (err, results, fields) => {
+        result = results;
+        console.log(err)
+        console.log(results)
+        console.log(fields)
+
+        if(err == null){
+            res.json(results)
+        }else{
+            res.send('ERROR')
+        }
+    })
 })
 
 // endpoint que deleta uma cultura baseado no seu codigo
